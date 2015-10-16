@@ -4,7 +4,7 @@ function Battle() {
 	this.waiting_clients = [];
 }
 
-Battle.prototype.addClient = function(command, callback) {
+Battle.prototype.addClient = function(command, text, callback) {
 	// Search for Opponent
 	
 	if (this.waiting_clients.length > 0) {
@@ -31,18 +31,21 @@ Battle.prototype.addClient = function(command, callback) {
 		callback({
 			result: opponent,
 			player: command,
-			opponent: o.command
+			opponent: o.command,
+			text: (opponent == 'win')?o.text:''
 		});
 		o.callback({
 			result: player,
 			player: o.command,
-			opponent: command
+			opponent: command,
+			text: (player == 'win')?text:''
 		});
 	} else {
 		// Add Waiting List
 		this.waiting_clients.push({
 			command: command,
-			callback: callback
+			callback: callback,
+			text: text
 		});
 	}
 };

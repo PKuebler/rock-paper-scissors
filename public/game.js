@@ -11,7 +11,10 @@ $('.btn').on('click', function() {
 	$(this).addClass('btn--active');
 
 	var id = $(this).attr('id');
-	connection.send(id.replace(/^btn-/, ''));
+	connection.send(JSON.stringify({
+		command: id.replace(/^btn-/, ''),
+		text: $('#wintext').val()
+	}));
 });
 
 connection.onmessage = function(e) {
@@ -23,6 +26,9 @@ connection.onmessage = function(e) {
 	var m = $('<div />');
 	m.addClass('battlelog');
 	m.text('you '+data.result+'. '+ data.player +' VS '+data.opponent);
+
+	if (data.text.length > 0)
+		alert(data.text);
 
 	$('.message').prepend(m);
 	console.log(data);

@@ -12,6 +12,11 @@ body {
 }
 h1 {
 	font-size: 20px;
+	margin: 10px 0px;
+}
+h2 {
+	font-size: 16px;
+	margin-bottom: 10px;
 }
 .battlelog {
 	padding: 10px;

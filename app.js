@@ -7,18 +7,25 @@ var WebSocketServer = require('ws').Server,
 var Battle = require('./backend/battle.js'),
 	battle = new Battle();
 
+// Escape
+var striptags = require('striptags');
+
 wss.on('connection', function connection(ws) {
 	console.log('new client');
 	ws.isopen = true;
 
 	ws.on('message', function(msg) {
 		// Battle Command
-		if (msg != 'rock' && msg != 'paper' && msg != 'scissors')
+		msg = JSON.parse(msg);
+		var command = msg.command;
+		var text = striptags(msg.text);
+
+		if (command != 'rock' && command != 'paper' && command != 'scissors')
 			return;
 
-		console.log('New Player: '+msg);
+		console.log('New Knight: '+command);
 
-		battle.addClient(msg, function(result) {
+		battle.addClient(command, text, function(result) {
 			// Callback
 			if (ws.isopen)
 				ws.send(JSON.stringify(result));

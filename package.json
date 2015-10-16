@@ -1,0 +1,15 @@
+{
+  "name": "rock-paper-scissors",
+  "version": "1.0.0",
+  "description": "Game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Philipp Kübler",
+  "license": "MIT",
+  "dependencies" : {
+    "ws": "*",
+    "express": "*"
+  }
+}

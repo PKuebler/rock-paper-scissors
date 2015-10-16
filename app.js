@@ -18,7 +18,11 @@ wss.on('connection', function connection(ws) {
 
 		console.log('New Player: '+msg);
 
-		battle.addClient(msg, ws);
+		battle.addClient(msg, function(result) {
+			// Callback
+			if (ws.isopen)
+				ws.send(JSON.stringify(result));
+		});
 	});
 
 	ws.on('close', function close() {

@@ -4,7 +4,7 @@ function Battle() {
 	this.waiting_clients = [];
 }
 
-Battle.prototype.addClient = function(command, socket) {
+Battle.prototype.addClient = function(command, callback) {
 	// Search for Opponent
 	
 	if (this.waiting_clients.length > 0) {
@@ -28,25 +28,21 @@ Battle.prototype.addClient = function(command, socket) {
 		}
 
 		// Send Results
-		if (socket.isopen) {
-			socket.send(JSON.stringify({
-				result: opponent,
-				player: command,
-				opponent: o.command
-			}));
-		}
-		if (o.socket.isopen) {
-			o.socket.send(JSON.stringify({
-				result: player,
-				player: o.command,
-				opponent: command
-			}));
-		}
+		callback({
+			result: opponent,
+			player: command,
+			opponent: o.command
+		});
+		o.callback({
+			result: player,
+			player: o.command,
+			opponent: command
+		});
 	} else {
 		// Add Waiting List
 		this.waiting_clients.push({
 			command: command,
-			socket: socket
+			callback: callback
 		});
 	}
 };
